@@ -1,0 +1,39 @@
+10-14-25
+# --- for rdf_ase.py NOT rdf.py---
+- any structural file needs to be able to be read by ase.io
+- the csv output by .export_rdf has ngrid # of data points
+- implement normalization of the radial distribution function (for ML algo) at some point
+- We need to be able to format the data like so:
+
+
+struct    g(r_1) . . . . . g(r_N)       label
+1         norm_val_1 . . . norm_val_N   BCC
+.         .                             .
+.         .                             .
+.         .                             .
+N         norm_val_N                    Crys_Struct_Label_N
+
+
+# --- physical meaning of sigma value (gaussian smearing) ---
+
+- sigma is a multiplier relative to the width of the histogram bins
+
+- bin_width = rmax/nbins
+- and then sigma broadens by x bins
+
+--- example ---
+rmax = 12 Ang ; nbins = 200 bins
+bin_width = 0.06 Ang/bin
+sigma = 3 means that we are broadening by 3 bins * 0.06 Ang/bin = 0.18Ang
+
+# ---
+nbins = 200 # moderate amount of resolution
+rmax = 5 # for computational purposes
+
+0.025 * x = 0.1
+For .1 Angs of broadening we need a sigma value of 4
+
+
+---
+I wonder if it matters that the ML algorithm wouldn't know what the actual r_N values are, just that there are 200 of them.
+

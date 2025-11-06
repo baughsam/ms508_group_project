@@ -1,0 +1,8 @@
+Assembling Labeled Dataset
+
+1. Choosing Crystal Classifications
+    - FCC, BCC, and HCP to start
+    - Simple and straight forward and I think it's easier enough to put more labels if need be (though I'm not sure)
+2. Acquiring Data from Materials Project
+    - We'll pull .cif (Crystallogrphic Information Files) using Pymatgen
+    -  Pymatgen will give us a Structure object

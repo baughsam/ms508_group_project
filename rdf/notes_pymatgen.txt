@@ -1,0 +1,23 @@
+10-14-25
+# --- for rdf.py NOT rdf_ase.py ---
+- any structural file needs to be a made into pymatgen's Structure format
+- the csv output by .export_rdf has ngrid # of data points
+- normalization of the radial distribution function (for ML algo)
+- We need to be able to format the data like so:
+
+
+struct    g(r_1) . . . . . g(r_N)       label
+1         norm_val_1 . . . norm_val_N   BCC
+.         .                             .
+.         .                             .
+.         .                             .
+N         norm_val_N                    Crys_Struct_Label_N
+
+ngrid = 200; sigma = 0.2
+    ~ makes for smooth graphs w/ a bit of spread. I don't want the peaks to be too sharp otherwise I imagine it will make the ML algorithm less able to extrapolate
+indices= [0]
+    ~ "A list of atom index of interest"
+    ~ I'm assuming that this is the atom where we take the distribution function from. There may be some more sophisticated way to choose this, but for now I'm just going to go for the 1st atom in the .cif file
+reference_indices=[0]
+    ~ list - "set this opiton along with 'indices' parameter to copute radial distribution function"
+    ~ Don't really get what this means
