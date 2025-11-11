@@ -1,0 +1,17 @@
+What script does:
+
+- Load the saved model and encoder.
+- Check which mode you want to run.
+    - If csv mode: It will perform the batch prediction on a pre-processed CSV.
+    - If cif mode: It will find all .cif files in the folder you provide, run the RDF calculation on each one, and predict them one by one.
+
+How to run:
+(You must run it in the terminal)
+
+CSV Mode:
+Command: `python predict.py csv --input new_batch.csv --output batch_results.csv`
+- This assumes you have a file named new_batch.csv that is already formatted with g(r) columns
+
+CIF Mode:
+Command `python predict.py cif --input my_new_cifs --output cif_results.csv`
+- This assumes you have a folder named my_new_cifs containing your .cif file(s)
