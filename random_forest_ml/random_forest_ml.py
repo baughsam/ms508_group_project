@@ -3,6 +3,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score, classification_report
 from sklearn.preprocessing import LabelEncoder # To convert text labels to numbers
+import joblib
 
 # --- 1. Load Your Data ---
 try:
@@ -37,6 +38,14 @@ rf_model = RandomForestClassifier(n_estimators=100, random_state=42)
 print("Training the Random Forest model...")
 # Train the model on the training data
 rf_model.fit(X_train, y_train)
+
+print("Training complete.")
+
+# --- NEW: Save the model and encoder ---
+print("Saving model and encoder to disk...")
+joblib.dump(rf_model, "rf_model.joblib")
+joblib.dump(le, "label_encoder.joblib")
+print("Model and encoder saved.")
 
 print("Training complete.")
 
