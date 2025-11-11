@@ -1,0 +1,58 @@
+Here is the README content as plain text:
+
+# README: traj-to-rdf_analysis_v2.py
+
+## Purpose
+This script serves as an automated pipeline to analyze Molecular Dynamics (MD) simulation data. Its primary purpose is to read `.traj` (ASE Trajectory) files, calculate a time-averaged Radial Distribution Function (RDF) for each one, and save the resulting data in a format ready for machine learning.
+
+This script is designed to process the output from `material_generation.py`, which creates `.traj` files at different temperatures. This script will:
+1.  Find all `.traj` files in the input directory.
+2.  Calculate an averaged $g(r)$ for all frames within each trajectory file.
+3.  Save the $g(r)$ data for **each temperature** as its own individual `.csv` file.
+4.  Compile all the $g(r)$ vectors into a **single master CSV file** (e.g., `cu_rdf_dataset.csv`), correctly formatted for an ML model.
+5.  Generate a diagnostic plot showing all the $g(r)$ curves overlaid and offset by temperature.
+
+## Dependencies
+This script requires several scientific Python libraries:
+* **ASE (Atomic Simulation Environment):** For reading `.traj` files.
+* **freud:** For extremely fast, high-performance RDF calculations.
+* **pandas:** For organizing and saving data to CSV files.
+* **numpy:** For numerical operations (a dependency of freud/pandas).
+* **matplotlib:** For generating the optional diagnostic plot.
+
+You can install them via pip:
+pip install ase freud-analysis pandas matplotlib
+
+## How to Run
+1.  Make sure your `.traj` files (from the previous script) are in the folder specified by the `TRAJ_DIR` variable.
+2.  Run the script directly from your terminal:
+
+python traj-to-rdf_analysis_v2.py
+
+The script will print its progress as it processes each trajectory file and will notify you when the CSV files and plot have been saved.
+
+## Configuration
+You can modify the simulation parameters in the `if __name__ == "__main__":` block at the bottom of the script:
+
+* `TRAJ_DIR`: The **input folder** where your `.traj` files are located.
+* `RDF_TXT_DIR`: A folder for saving the diagnostic plot (default: `"rdf_data"`).
+* `CSV_DIR`: The **output folder** for the *master* dataset (default: `"validation_rdfs"`).
+* `INDIVIDUAL_CSV_DIR`: The **output folder** for the *individual* CSV files (default: `"individual_csvs"`).
+* `R_MAX`: The maximum cutoff distance (in Angstroms) for the RDF calculation (default: `6.0`). This **must match** the `RMAX` used for your ML training data.
+* `BINS`: The number of bins for the RDF histogram (default: `200`). This **must match** the `NBINS` used for your ML training data.
+* `STRUCTURE_TYPE`: A short name for the material (e.g., "cu"). Used for file naming.
+* `STRUCTURE_LABEL`: The label you want to assign to this data in the ML dataset (e.g., "FCC").
+* `DO_PLOTTING`: Set to `True` or `False` to enable or disable the creation of the overlay plot.
+
+## Output
+This script generates three types of output:
+
+1.  **Individual CSVs (in `individual_csvs`):** A separate `.csv` file for each temperature. Each file contains a single row of data, formatted for machine learning.
+    * `cu_T_300K.csv`
+    * `cu_T_400K.csv`
+    * ...etc.
+
+2.  **Master CSV (in `validation_rdfs`):** A single file (e.g., `cu_rdf_dataset.csv`) that contains all the RDF data, with one row per temperature. This is the main file you would use for validation.
+    * **Format:** `structure_id, g(r)_1, g(r)_2, ..., g(r)_200, label`
+
+3.  **Diagnostic Plot (in `rdf_data`):** An image file (`rdf_vs_temp_overlay.png`) that shows all the $g(r)$ curves plotted on the same graph, with a vertical offset based on temperature. This is useful for visually confirming that the RDFs are changing as expected (i.e., peaks get broader at higher temperatures).

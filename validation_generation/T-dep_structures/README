@@ -1,0 +1,48 @@
+Here is the README content as plain text:
+
+# README: material_generation.py
+
+## Purpose
+This script uses the Atomic Simulation Environment (ASE) library to perform a series of Molecular Dynamics (MD) simulations on a Copper (Cu) supercell.
+The primary goal is to generate a dataset of "imperfect" or "noisy" crystal structures. It does this by running simulations at a range of increasing temperatures. At higher temperatures, atoms vibrate more, creating snapshots that deviate from the perfect, ideal crystal lattice.
+
+## Dependencies
+This script requires the ASE (Atomic Simulation Environment) library. You can install it via pip:
+pip install ase
+
+## How to Run
+You can run the script directly from your terminal:
+python material_generation.py
+The script will print its progress for each temperature step, including the time taken for each simulation.
+
+## What The Script Does
+1.  Builds System: It starts by building a large 6x6x6 supercell of Face-Centered Cubic (FCC) Copper.
+2.  Attaches Calculator: It attaches a fast, classical EMT (Effective Medium Theory) calculator to handle the forces.
+3.  Initializes: It sets the initial atomic velocities to 300 K.
+4.  Temperature Ramp: The script then loops through a pre-defined list of temperatures (from 300 K to 1350 K).
+5.  For *each* temperature in the ramp:
+    * Equilibration: It runs a long "warm-up" simulation (10,000 steps) using a Langevin thermostat. This allows the system to stabilize at the new target temperature.
+    * Production: After equilibration, it runs a "production" simulation (5,000 steps).
+    * Saves Data: During the production run, it saves a snapshot (a "frame") of all atomic positions every 50 steps.
+
+## Configuration
+You can modify the simulation parameters directly at the top of the script:
+
+* OUTPUT_DIR: The folder where all output files will be saved (default: "md_temp_ramp").
+* SUPERCELL_SIZE: The size of the initial supercell (default: (6, 6, 6)).
+* TEMP_RAMP_K: The Python list of target temperatures (in Kelvin) to simulate.
+* STEPS_EQUILIBRATE: The number of "warm-up" steps at each temperature (default: 10000).
+* STEPS_PRODUCTION: The number of "data-gathering" steps (default: 5000).
+* SAVE_INTERVAL: How often to save a frame during production (default: 50).
+
+## Output
+The script will create a new directory (specified by OUTPUT_DIR). Inside this directory, you will find a set of .traj files, one for each temperature in the TEMP_RAMP_K list.
+Example Output Files:
+* cu_T_300K.traj
+* cu_T_400K.traj
+* cu_T_500K.traj
+* ...etc.
+
+Each .traj file is an ASE Trajectory file that contains multiple snapshots (frames) of the system at that specific temperature. For the default settings (5000 / 50), each file will contain 100 snapshots.
+
+These snapshots are the "imperfect" structures you can use as input for your machine learning model.
