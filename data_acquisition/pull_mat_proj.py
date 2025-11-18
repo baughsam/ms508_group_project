@@ -99,13 +99,25 @@ def pull_materials_data():
     manifest_filepath = os.path.join(OUTPUT_DIR, MANIFEST_FILE)
     print(f"\nWriting manifest file to: {manifest_filepath}")
 
+    # Check if the file already exists so we know if we need to write headers
+    file_exists = os.path.isfile(manifest_filepath)
+
+    # Open in 'a' (append) mode if it exists, 'w' (write) if it doesn't
+    mode = 'a' if file_exists else 'w'
+
+    print(f"\n{mode.capitalize()}ing to manifest file: {manifest_filepath}")
+
     try:
-        with open(manifest_filepath, 'w', newline='') as f:
+        with open(manifest_filepath, mode, newline='') as f:
             writer = csv.writer(f)
-            # Write the header
-            writer.writerow(["filename", "label"])
-            # Write all the data rows
+
+            # Only write the header row if it's a NEW file
+            if not file_exists:
+                writer.writerow(["filename", "label"])
+
+            # Write the new data rows
             writer.writerows(manifest_data)
+
     except Exception as e:
         print(f"Error writing manifest file: {e}")
 
