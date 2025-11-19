@@ -1,3 +1,0 @@
-rdf_process_and_compile.py ~ completed script
-
-Takes from downloaded .cif files, makes rdf, puts all rdfs in a single master csv for the random forest ML algorithm
