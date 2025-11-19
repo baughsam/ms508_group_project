@@ -64,7 +64,7 @@ print(f"Set initial velocities to {START_TEMP_K} K.")
 for target_temp_K in TEMP_RAMP_K:
     print(f"\n--- Starting T = {target_temp_K} K ---")
 
-    # --- NEW --- Record the start time for this specific loop
+    # --- Record the start time for this specific loop ---
     loop_start_time = time.perf_counter()
 
     # --- Create a NEW Langevin object for this temperature ---
@@ -100,12 +100,12 @@ for target_temp_K in TEMP_RAMP_K:
 
     print(f"  Done. Trajectory saved to: {traj_filename}")
 
-    # --- NEW --- Calculate and print the time for this loop
+    # --- Calculate and print the time for this loop ---
     loop_end_time = time.perf_counter()
     print(f"  > This temperature step took {loop_end_time - loop_start_time:.2f} seconds.")
 
 print("\n--- All Simulations Finished ---")
 
-# --- NEW --- Calculate and print the total script time
+# --- Calculate and print the total script time ---
 script_end_time = time.perf_counter()
 print(f"Total script runtime: {script_end_time - script_start_time:.2f} seconds")
