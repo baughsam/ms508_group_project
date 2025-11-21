@@ -1,7 +1,0 @@
-Basic random forest ML algorithm
-
-Saved files:
-- rf_model.joblib ~ model
-- label_encoder.joblib ~ label encoder
-
-The saved files are used to load our trained model into the /predictor/rf_alg_predictor.py
