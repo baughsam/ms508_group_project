@@ -16,7 +16,7 @@ python material_generation.py
 The script will print its progress for each temperature step, including the time taken for each simulation.
 
 ## What The Script Does
-1.  Builds System: It starts by building a large 6x6x6 supercell of Face-Centered Cubic (FCC) Copper.
+1.  Builds System: It starts by building a large 6x6x6 supercell of Face-Centered Cubic (FCC) Copper (or equivalent for specified material).
 2.  Attaches Calculator: It attaches a fast, classical EMT (Effective Medium Theory) calculator to handle the forces.
 3.  Initializes: It sets the initial atomic velocities to 300 K.
 4.  Temperature Ramp: The script then loops through a pre-defined list of temperatures (from 300 K to 1350 K).
@@ -38,9 +38,9 @@ You can modify the simulation parameters directly at the top of the script:
 ## Output
 The script will create a new directory (specified by OUTPUT_DIR). Inside this directory, you will find a set of .traj files, one for each temperature in the TEMP_RAMP_K list.
 Example Output Files:
-* cu_T_300K.traj
-* cu_T_400K.traj
-* cu_T_500K.traj
+* {element}_T_300K.traj
+* {element}_T_400K.traj
+* {element}_T_500K.traj
 * ...etc.
 
 Each .traj file is an ASE Trajectory file that contains multiple snapshots (frames) of the system at that specific temperature. For the default settings (5000 / 50), each file will contain 100 snapshots.
