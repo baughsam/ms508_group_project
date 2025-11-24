@@ -38,17 +38,18 @@ FRICTION = 0.02  # Langevin friction parameter (0.01-0.05 is typical)
 
 # --- 1c. Simulation Step Parameters ---
 # Use a much longer equilibration time to ensure system is heated
-STEPS_EQUILIBRATE = 10  # 10000 steps * 4.0 fs = 40.0 ps
-STEPS_PRODUCTION = 500  # 40.0 ps (We will save frames from this part) 5000
-SAVE_INTERVAL = 5  # Save a "frame" every 50 steps (5000/50 = 100 frames) 50
+STEPS_EQUILIBRATE = 10000  # 10000 steps * 4.0 fs = 40.0 ps
+STEPS_PRODUCTION = 5000  # 40.0 ps (We will save frames from this part) 5000
+SAVE_INTERVAL = 50  # Save a "frame" every 50 steps (5000/50 = 100 frames) 50
 
 print(f"Equilibration: {STEPS_EQUILIBRATE} steps ({STEPS_EQUILIBRATE * TIMESTEP / fs:.1f} fs)")
 print(f"Production: {STEPS_PRODUCTION} steps ({STEPS_PRODUCTION * TIMESTEP / fs:.1f} fs)")
 print("------------------------------------------------")
 
 # --- 2. BUILD THE ATOMIC STRUCTURE ---
-"""
+
 #Copper (Cu); MT ~ 1350K
+element = "cu"
 atoms = bulk('Cu', 'fcc', a=3.6, cubic=True)
 atoms = atoms.repeat(SUPERCELL_SIZE)
 print(f"Built {SUPERCELL_SIZE} Cu supercell with {len(atoms)} atoms.")
@@ -59,7 +60,7 @@ element = "fe"
 atoms = bulk('Fe', 'bcc', a=2.87, cubic=True)
 atoms = atoms.repeat(SUPERCELL_SIZE)
 print(f"Built {SUPERCELL_SIZE} Fe supercell with {len(atoms)} atoms.")
-
+"""
 """
 element = "mg"
 #Magnesium (Mg); MT ~920
